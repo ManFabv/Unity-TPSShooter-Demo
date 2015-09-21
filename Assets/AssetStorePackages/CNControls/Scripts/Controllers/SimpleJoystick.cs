@@ -107,8 +107,6 @@ namespace CnControls
 
         private void Awake()
         {
-            Debug.Log("BASE = " + Base);
-            Debug.Log("THIS = " + this);
             _stickTransform = Stick.GetComponent<RectTransform>();
             _baseTransform = Base.GetComponent<RectTransform>();
 
