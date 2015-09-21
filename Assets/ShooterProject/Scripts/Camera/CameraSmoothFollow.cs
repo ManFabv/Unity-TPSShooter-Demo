@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraSmoothFollow : MonoBehaviour {
 
 	// The target we are following
-	public Transform target;
+	private Transform target;
 	// The distance in the x-z plane to the target
 	public float distance = 10.0f;
 	// the height we want the camera to be above the target
@@ -23,7 +23,7 @@ public class CameraSmoothFollow : MonoBehaviour {
 	void Start()
 	{
 		if(target == null)
-			target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+			target = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.PLAYER).GetComponent<Transform>();
 	}
 
 	void LateUpdate () {
