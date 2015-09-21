@@ -19,6 +19,12 @@ public class CameraSmoothFollow : MonoBehaviour {
 
 	// Place the script in the Camera-Control group in the component menu
 	[AddComponentMenu("Camera-Control/Smooth Follow")]
+	
+	void Start()
+	{
+		if(target == null)
+			target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+	}
 
 	void LateUpdate () {
 		// Early out if we don't have a target
