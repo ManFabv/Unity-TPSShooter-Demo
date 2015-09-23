@@ -43,14 +43,6 @@ public class CameraSmoothFollow : MonoBehaviour {
 		// Damp the height
 		currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
 
-		// Convert the angle into a rotation
-//		var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
-	
-		// Set the position of the camera on the x-z plane to:
-		// distance meters behind the target
-//		transform.position = target.position;
-//		transform.position -= currentRotation * Vector3.forward * distance;
-
 		transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref velocity, followTranslationDamp);
 
 		// Set the height of the camera

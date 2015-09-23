@@ -6,6 +6,7 @@ using CnControls;
 public class PlayerMovement : MonoBehaviour 
 {	
 	public float translationSpeed = 3.0f;
+	public float rotationSpeed = 15.0f;
 	public bool invertAxis = false;
 	
 	private Vector3 movement;
@@ -26,5 +27,8 @@ public class PlayerMovement : MonoBehaviour
 			movement = new Vector3(CnInputManager.GetAxis("Horizontal"), 0.0f, CnInputManager.GetAxis("Vertical"));
 		
         playerRigidBody.velocity = movement * translationSpeed;
+		
+		if(movement.sqrMagnitude != 0)
+			playerRigidBody.MoveRotation( Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(movement.normalized), Time.deltaTime*rotationSpeed) );
 	}
 }
