@@ -26,7 +26,7 @@ public class CameraSmoothFollow : MonoBehaviour {
 			target = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.PLAYER).GetComponent<Transform>();
 	}
 
-	void LateUpdate () {
+	void FixedUpdate () {
 		// Early out if we don't have a target
 		if (!target) return;
 

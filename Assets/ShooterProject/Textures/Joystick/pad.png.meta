@@ -50,7 +50,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites: []
-  spritePackingTag: MENU
+  spritePackingTag: PLAYER_GUI
   userData: 
   assetBundleName: 
   assetBundleVariant: 
