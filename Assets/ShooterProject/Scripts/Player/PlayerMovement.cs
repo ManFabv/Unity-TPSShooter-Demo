@@ -5,7 +5,7 @@ using CnControls;
 [RequireComponent (typeof (Rigidbody))]
 public class PlayerMovement : MonoBehaviour 
 {	
-	public float translationSpeed = 5.0f;
+	public float translationSpeed = 4.0f;
 	public float rotationSpeed = 15.0f;
 	public bool invertAxis = false;
 	
@@ -13,11 +13,13 @@ public class PlayerMovement : MonoBehaviour
 	
 	private Rigidbody playerRigidBody;
 	private Transform playerTransform;
+	private BasicWeaponShooting basicWeaponShooting;
 	
 	void Awake()
 	{
 		playerRigidBody = this.GetComponent<Rigidbody>();
 		playerTransform = this.GetComponent<Transform>();
+		basicWeaponShooting = this.GetComponentInChildren<BasicWeaponShooting>();
 	}
 	
 	// Update is called once per frame
@@ -32,7 +34,12 @@ public class PlayerMovement : MonoBehaviour
 		
 		playerRigidBody.MovePosition(playerTransform.position + movement);
 		
-		if(movement.sqrMagnitude != 0)
+		if(movement.sqrMagnitude != 0 && basicWeaponShooting.IsShooting() == false)
 			playerRigidBody.MoveRotation( Quaternion.Lerp(playerTransform.rotation, Quaternion.LookRotation(movement.normalized), Time.deltaTime*rotationSpeed) );
+	}
+	
+	public void RotationUpdate(Vector3 externalMovement)
+	{
+		playerRigidBody.MoveRotation( Quaternion.Lerp(playerTransform.rotation, Quaternion.LookRotation(externalMovement.normalized), Time.deltaTime*rotationSpeed) );
 	}
 }
