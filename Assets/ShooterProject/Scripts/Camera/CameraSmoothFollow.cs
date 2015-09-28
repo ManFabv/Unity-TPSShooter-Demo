@@ -14,19 +14,18 @@ public class CameraSmoothFollow : MonoBehaviour {
 	public float rotationDamping = 3.0f;
 	
 	public Vector3 offset = Vector3.zero;
-	public float followTranslationDamp = 1.0f;
+	public float followTranslationDamp = 0.55f;
+
 	private Vector3 velocity = Vector3.zero;
 
-	// Place the script in the Camera-Control group in the component menu
-	[AddComponentMenu("Camera-Control/Smooth Follow")]
-	
 	void Start()
 	{
 		if(target == null)
 			target = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.PLAYER).GetComponent<Transform>();
 	}
 
-	void FixedUpdate () {
+	void FixedUpdate () 
+	{
 		// Early out if we don't have a target
 		if (!target) return;
 

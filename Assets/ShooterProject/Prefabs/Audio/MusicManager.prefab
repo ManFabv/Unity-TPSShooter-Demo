@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 432322}
   - 82: {fileID: 8256154}
+  - 114: {fileID: 11422066}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -99,6 +100,21 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11422066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4c6589347b54b37af50295ed8ef037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vol_low: {fileID: 24504170, guid: 0069760745f214c8392c28704b07118b, type: 2}
+  vol_high: {fileID: 24500003, guid: 0069760745f214c8392c28704b07118b, type: 2}
+  audioMixer: {fileID: 24100000, guid: 0069760745f214c8392c28704b07118b, type: 2}
+  timeForFade: 1.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

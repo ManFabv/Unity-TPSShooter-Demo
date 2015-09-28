@@ -97,7 +97,7 @@ MonoBehaviour:
   heightDamping: 2
   rotationDamping: .200000003
   offset: {x: 0, y: 0, z: -8}
-  followTranslationDamp: .699999988
+  followTranslationDamp: .550000012
 --- !u!114 &11486248
 MonoBehaviour:
   m_ObjectHideFlags: 1

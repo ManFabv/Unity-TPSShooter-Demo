@@ -21,25 +21,29 @@ public class PlayerMovement : MonoBehaviour
 		playerTransform = this.GetComponent<Transform>();
 		basicWeaponShooting = this.GetComponentInChildren<BasicWeaponShooting>();
 	}
-	
-	// Update is called once per frame
+
 	void FixedUpdate () 
 	{
 		if(invertAxis)
 			movement = new Vector3(CnInputManager.GetAxis("Horizontal"), 0.0f, -CnInputManager.GetAxis("Vertical"));
 		else
 			movement = new Vector3(CnInputManager.GetAxis("Horizontal"), 0.0f, CnInputManager.GetAxis("Vertical"));
-			
+
 		movement = movement * translationSpeed * Time.deltaTime;
 		
-		playerRigidBody.MovePosition(playerTransform.position + movement);
+		MovementUpdate(movement);
 		
-		if(movement.sqrMagnitude != 0 && basicWeaponShooting.IsShooting() == false)
-			playerRigidBody.MoveRotation( Quaternion.Lerp(playerTransform.rotation, Quaternion.LookRotation(movement.normalized), Time.deltaTime*rotationSpeed) );
+		if( (movement.x != 0 || movement.z != 0) && basicWeaponShooting.IsShooting () == false )
+			RotationUpdate (movement);
 	}
 	
 	public void RotationUpdate(Vector3 externalMovement)
 	{
 		playerRigidBody.MoveRotation( Quaternion.Lerp(playerTransform.rotation, Quaternion.LookRotation(externalMovement.normalized), Time.deltaTime*rotationSpeed) );
+	}
+
+	public void MovementUpdate(Vector3 externalMovement)
+	{
+		playerRigidBody.MovePosition(playerTransform.position + externalMovement);
 	}
 }
