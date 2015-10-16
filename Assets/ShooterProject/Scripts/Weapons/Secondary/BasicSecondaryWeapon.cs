@@ -27,6 +27,8 @@ public abstract class BasicSecondaryWeapon : MonoBehaviour {
     //ya puede moverse despues de tirar el disparo que sera un tiempo menor al total de tiempo entre disparos
     protected float timePlayerCanWalkAfterShot;
 
+    private AudioSource weaponAudioSource; //me servira para reproducir un sonido cuando haya algun lanzamiento en el disparo
+
     // Use this for initialization
     void Start()
     {
@@ -41,6 +43,8 @@ public abstract class BasicSecondaryWeapon : MonoBehaviour {
 
         //busco el slot secundario para tomar su posicion y rotacion para el lanzamiento del disparo
         throwPosition = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.SECONDARY_WEAPON_SLOT).transform;
+
+        weaponAudioSource = this.GetComponent<AudioSource>(); //tomo el audio source para reproducir el sonido throw
     }
 
     void FixedUpdate()
@@ -74,6 +78,8 @@ public abstract class BasicSecondaryWeapon : MonoBehaviour {
         timer = 0; //reinicio el timer
 
         InstantiateShot(); //procedo a instanciar el disparo
+
+        weaponAudioSource.PlayOneShot(weaponAudioSource.clip); //reproduzco el sonido de throw
     }
 
     //este metodo reinicia los valores para finalizar el disparo

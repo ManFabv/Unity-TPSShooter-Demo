@@ -127,6 +127,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eb0574ffec2d240a1bce8163d44589a1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &788920921
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.73000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445104, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 494acc61fc97f274a9c09eb46b0ef70d, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &922027043
 Prefab:
   m_ObjectHideFlags: 0
@@ -242,7 +284,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!54 &950312878
 Rigidbody:
   m_ObjectHideFlags: 0

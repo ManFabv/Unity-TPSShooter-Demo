@@ -30,11 +30,9 @@ public class BasicPrimaryWeapon_Machinegun : BasicPrimaryWeapon
         //con el final en la posicion en la cual colisiono el raycast
         if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
-            //EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
-            //if(enemyHealth != null)
-            //{
-            //    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
-            //}
+            //si el objeto con el que colisiono es un enemigo, entonces envio un mensaje de TakeDamage
+            if(shootHit.collider.gameObject.CompareTag("Enemy") == true)
+                shootHit.collider.gameObject.SendMessage("TakeDamage", damagePerShot, SendMessageOptions.DontRequireReceiver);
 
             //pongo como posicion 1 (1 es la posicion del final del line renderer) la posicion en la que choco el raycast
             gunLine.SetPosition(1, shootHit.point);

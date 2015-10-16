@@ -21,13 +21,15 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
     protected RaycastHit shootHit;
 
     //mascara en la cual revisare por colisiones en el raycast
-    protected int shootableMask;
+    [SerializeField]
+    protected LayerMask shootableMask;
     
     //recursos que usare para realizar el disparo (como las particulas, el audio, etc)
     protected ParticleSystem gunParticles;
     protected LineRenderer gunLine;
     protected AudioSource gunAudio;
     protected Light gunLight;
+
     protected float effectsDisplayTime = 0.2f; //tiempo que demora en terminar los efectos
 
     protected PlayerMovement playerMovement; //script que me permitira ejecutar la rotacion mientras disparo
@@ -36,9 +38,6 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
 
     void Start()
     {
-        //guardo el layer en el cual realizare el raycast, en este caso, sera el layer shootable
-        shootableMask = LayerMask.GetMask("Shootable");
-
         //obtengo los scripts necesarios para representar el disparo
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
