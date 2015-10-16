@@ -7,13 +7,23 @@ public class SceneLoaderDebug : MonoBehaviour {
     [SerializeField]
     public string nombreEscenaFabricio = "";
 
+    private bool loadingLevel = false;
+
 	public void CargarEscenaSilvio()
     {
-        Application.LoadLevel(nombreEscenaSilvio);
+        if (loadingLevel == false)
+        {
+            loadingLevel = true;
+            Application.LoadLevel(nombreEscenaSilvio);
+        }
     }
 
     public void CargarEscenaFabricio()
     {
-        Application.LoadLevel(nombreEscenaFabricio);
+        if (loadingLevel == false)
+        {
+            loadingLevel = true;
+            Application.LoadLevel(nombreEscenaFabricio);
+        }
     }
 }

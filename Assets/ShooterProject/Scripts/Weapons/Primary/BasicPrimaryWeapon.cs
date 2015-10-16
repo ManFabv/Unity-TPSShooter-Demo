@@ -51,7 +51,7 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
     void FixedUpdate()
     {
         //si esta disparando, voy incrementando el tiempo
-        if(isShooting == true)
+        if(isShooting)
             timer += Time.fixedDeltaTime;
 
         //tomo la direccion en la que esta apuntando el jugador con el stick derecho
