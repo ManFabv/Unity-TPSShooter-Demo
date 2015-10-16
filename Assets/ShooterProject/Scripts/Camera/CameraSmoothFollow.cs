@@ -1,53 +1,66 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CameraSmoothFollow : MonoBehaviour {
 
-	// The target we are following
+	//el objeto a seguir
+    [SerializeField]
 	private Transform target;
-	// The distance in the x-z plane to the target
-	public float distance = 10.0f;
-	// the height we want the camera to be above the target
-	public float height = 5.0f;
-	// How much we 
-	public float heightDamping = 2.0f;
-	public float rotationDamping = 3.0f;
-	
-	public Vector3 offset = Vector3.zero;
-	public float followTranslationDamp = 0.55f;
 
+    //a que altura se movera la camara sobre el target
+    [SerializeField]
+    private float height = 5.0f;
+
+    //amortiguacion del movimiento (altura y rotacion)
+    [SerializeField]
+    private float heightDamping = 2.0f;
+    [SerializeField]
+    private float rotationDamping = 3.0f;
+
+    //offset que tendra la camara siguiendo al jugador
+    [SerializeField]
+    private Vector3 offset = Vector3.zero;
+
+    //amortiguacion de translacion
+    [SerializeField]
+    private float followTranslationDamp = 0.55f;
+
+    //velocidad de movimiento
 	private Vector3 velocity = Vector3.zero;
 
 	void Start()
 	{
+        //si no hay un objetivo asignado, busco al jugador
 		if(target == null)
 			target = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.PLAYER).GetComponent<Transform>();
 	}
 
 	void FixedUpdate () 
 	{
-		// Early out if we don't have a target
-		if (!target) return;
+		//si no hay target, salimos del metodo
+		if (!target)
+            return;
 
-		// Calculate the current rotation angles
+		// calculamos la altura y rotacion deseada
 		float wantedRotationAngle = target.eulerAngles.y;
 		float wantedHeight = target.position.y + height;
 
+        //tomamos la altura y rotacion actual para comenzar el movimiento
 		float currentRotationAngle = transform.eulerAngles.y;
 		float currentHeight = transform.position.y;
 
-		// Damp the rotation around the y-axis
+		//interpolamos el angulo para acercarnos al angulo deseado
 		currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
-	
-		// Damp the height
-		currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
 
-		transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref velocity, followTranslationDamp);
+        //interpolamos la altura para acercarnos a la altura deseada
+        currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
 
-		// Set the height of the camera
-		transform.position = new Vector3(transform.position.x,currentHeight,transform.position.z);
+        ////interpolamos la posicion a la posicion deseada (teniedo en cuenta el offset)
+        transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref velocity, followTranslationDamp);
+
+		//asigno la altura de la camara
+		transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
 	
-		// Always look at the target
+		//hago que siempre mire al objetivo
 		transform.LookAt(target);
 	}
 }

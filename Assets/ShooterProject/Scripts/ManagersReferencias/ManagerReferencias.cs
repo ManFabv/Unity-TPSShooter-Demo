@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class ManagerReferencias : Singleton<ManagerReferencias> {
 
-	private Dictionary<NombresReferencias.NOMBRES_REFERENCIAS, List<GameObject>> listadoReferencias;
-	
-	void Awake()
-	{
-		listadoReferencias = new Dictionary<NombresReferencias.NOMBRES_REFERENCIAS, List<GameObject>>();
-	}
+	private Dictionary<NombresReferencias.NOMBRES_REFERENCIAS, List<GameObject>> listadoReferencias = new Dictionary<NombresReferencias.NOMBRES_REFERENCIAS, List<GameObject>>();
 	
 	public void AgregarReferencia(NombresReferencias.NOMBRES_REFERENCIAS nombreReferencia, GameObject referencia)
 	{

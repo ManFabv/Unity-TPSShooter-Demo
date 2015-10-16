@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class ReferenciaBasica : MonoBehaviour {
 
-	public NombresReferencias.NOMBRES_REFERENCIAS nombreReferencia;
+    [SerializeField]
+	private NombresReferencias.NOMBRES_REFERENCIAS nombreReferencia;
 	
 	void Awake()
 	{

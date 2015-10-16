@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ddea9b34ff045b7b65456d4be49219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 8
+  target: {fileID: 0}
   height: 6
   heightDamping: 2
   rotationDamping: .200000003

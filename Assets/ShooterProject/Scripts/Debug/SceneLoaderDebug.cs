@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class SceneLoaderDebug : MonoBehaviour {
 
+    [SerializeField]
     public string nombreEscenaSilvio = "";
+    [SerializeField]
     public string nombreEscenaFabricio = "";
 
 	public void CargarEscenaSilvio()

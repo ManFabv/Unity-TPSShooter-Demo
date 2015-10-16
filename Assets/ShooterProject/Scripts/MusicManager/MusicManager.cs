@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Audio;
 
 public class MusicManager : Singleton<MusicManager> 
 {
-	public AudioMixerSnapshot vol_low;
-	public AudioMixerSnapshot vol_high;
-	public AudioMixer audioMixer;
+    [SerializeField]
+	private AudioMixerSnapshot vol_low;
+    [SerializeField]
+    private AudioMixerSnapshot vol_high;
+    [SerializeField]
+    private AudioMixer audioMixer;
 
-	public float timeForFade = 0.5f;
+    [SerializeField]
+    private float timeForFade = 0.5f;
 
 	private static MusicManager instanceRef = null; //para evitar objetos duplicados voy a usar esta variable como control
-
-	// Use this for initialization
-	void Start () 
-	{
-		OnLevelWasLoaded();
-	}
 
 	void Awake()
 	{
@@ -25,7 +22,9 @@ public class MusicManager : Singleton<MusicManager>
 			//agrego la instancia y digo que no se destruya
 			instanceRef = this;
 			DontDestroyOnLoad(gameObject);
-		}
+
+            OnLevelWasLoaded(); //inicializo el audio
+        }
 		
 		else //si ya hay una instancia, entonces puedo destruir esta instancia
 		{
@@ -33,16 +32,20 @@ public class MusicManager : Singleton<MusicManager>
 		}
 	}
 	
-	//when a new level is loaded, we check to see if the the scene is the menu, so we can deactivate or reactivate all of the children objects.
+	//cuando un nivel es cargado, se ejecuta este metodo callback
 	void OnLevelWasLoaded () 
 	{
+        //cargo los snapshots, diciendo con el segundo parametro, el peso de cada snapshot (vemos que como segundo parametro tenemos 1,0, esto
+        //quiere decir que el snapshot actual esta completamente hacia el snapshot de volumen bajo y nada del snapshot de volumen alto)
 		audioMixer.TransitionToSnapshots (new AudioMixerSnapshot[] {vol_low, vol_high}, new float[]{1, 0}, float.Epsilon);
 
-		Invoke ("InitFadeIn", float.Epsilon*1.0f);
+        //llamo con un retraso para comenzar el fade in
+		Invoke ("InitFadeIn", float.Epsilon*2.0f);
 	}
 
 	public void InitFadeIn()
 	{
+        //inicio la transicion del audio, hacia el snapshot con volumen alto y le paso el tiempo de fade
 		vol_high.TransitionTo (timeForFade);
 	}
 }
