@@ -48,6 +48,8 @@ public class GrenadeShot : MonoBehaviour {
     {
         CancelInvoke("Explode"); //si explota antes de ser invocado, entonces por las dudas cancelo el invoke
 
+        MusicManager.Instance.InitDistortion(gunAudioDisparo.clip.length/2.0f); //inicio el efecto de distortion
+
         //obtengo todos los colliders
         Collider[] cols = this.GetComponents<Collider>();
 
@@ -68,9 +70,12 @@ public class GrenadeShot : MonoBehaviour {
 
         AfectarObjetosEnRadio(); //hago que la explosion afecte a los objetos en el radio
 
+        //tomo el maximo valor entre la duracion del sistema de particulas y el clip de audio del disparo
+        float timeToClean = Mathf.Max(gunParticlesDisparo.duration * 1.2f, gunAudioDisparo.clip.length + 0.1f);
+
         //invoco al metodo clean para que se ejecute en un cierto tiempo. El tiempo lo tomo como el maximo
         //valor entre la duracion del sistema de particulas mas un 20%, o la duracion del clip de audio mas un 10%
-        Invoke("Clean", Mathf.Max(gunParticlesDisparo.duration*1.2f, gunAudioDisparo.clip.length+0.1f));
+        Invoke("Clean", timeToClean);
     }    
 
     private void AfectarObjetosEnRadio()
@@ -98,6 +103,11 @@ public class GrenadeShot : MonoBehaviour {
 
     private void Clean()
     {
+        //tomo el maximo valor entre la duracion del sistema de particulas y el clip de audio del disparo
+        float timeToClean = Mathf.Max(gunParticlesDisparo.duration * 1.2f, gunAudioDisparo.clip.length + 0.1f);
+
+        MusicManager.Instance.EndDistortion(timeToClean * 4); //hago que suavemente inicie el cambio a audio sin distortion
+
         //elimino el objeto
         GameObject.Destroy(this.gameObject);
     }
