@@ -5,8 +5,6 @@ using CnControls;
 public class PlayerMovement : MonoBehaviour 
 {	
     [SerializeField]
-    private bool invertAxis = false; //si debe invertir el eje de movimiento vertical
-    [SerializeField]
     private float translationSpeed = 4.0f; //velocidad de traslacion
     [SerializeField]
     private float rotationSpeed = 15.0f; //velocidad de rotacion
@@ -35,33 +33,38 @@ public class PlayerMovement : MonoBehaviour
 
     public void RotationUpdate(Vector3 externalMovement)
     {
-        //hago rotar al cuerpo rigido en la direccion especificada
-        playerRigidBody.MoveRotation(Quaternion.Lerp(playerRigidBody.rotation, Quaternion.LookRotation(externalMovement.normalized), Time.fixedDeltaTime * rotationSpeed));
+        //si hay movimiento al menos en un eje
+        if (externalMovement.x != 0 || externalMovement.z != 0)
+        {
+            //hago rotar al cuerpo rigido en la direccion especificada
+            playerRigidBody.MoveRotation(Quaternion.Lerp(playerRigidBody.rotation, Quaternion.LookRotation(externalMovement.normalized), Time.fixedDeltaTime * rotationSpeed));
+        }
     }
 
     public void MovementUpdate(Vector3 externalMovement)
     {
-        //muevo al cuerpo rigido en la direccion especificada
-        playerRigidBody.MovePosition(playerRigidBody.position + externalMovement);
+        if (externalMovement.x != 0 || externalMovement.z != 0) //si hay movimiento al menos en un eje
+        {
+            //calculo el movimiento de acuerdo al tiempo y a la velocidad
+            externalMovement = movement * translationSpeed * Time.fixedDeltaTime;
+
+            //muevo al cuerpo rigido en la direccion especificada
+            playerRigidBody.MovePosition(playerRigidBody.position + externalMovement);
+        }
     }
 
     void FixedUpdate()
     {
-        //de acuerdo a si debe o no invertir el eje de movimiento, lo que hago es invertir el valor del input
-        if (invertAxis)
-            movement = new Vector3(CnInputManager.GetAxis("Horizontal"), 0.0f, -CnInputManager.GetAxis("Vertical"));
-        else
-            movement = new Vector3(CnInputManager.GetAxis("Horizontal"), 0.0f, CnInputManager.GetAxis("Vertical"));
-
-        //calculo el movimiento de acuerdo al tiempo y a la velocidad
-        movement = movement * translationSpeed * Time.fixedDeltaTime;
+        //tomo el valor del movimiento de acuerdo al input del jugador
+        movement = new Vector3(CnInputManager.GetAxis("Horizontal"), 0.0f, CnInputManager.GetAxis("Vertical"));
 
         //si no esta usando el arma secundaria, entonces actualizo el movimiento
         if(secondaryWeaponShooting != null && secondaryWeaponShooting.IsShooting() == false)
             MovementUpdate(movement);
 
+        //si los scripts de las armas son validos y
         //si hay movimiento y no esta disparando ni el arma principal ni la secundaria, actualizo la rotacion
-        if ((movement.x != 0 || movement.z != 0) && primaryWeaponShooting.IsShooting() == false && secondaryWeaponShooting.IsShooting() == false)
+        if ((primaryWeaponShooting != null && secondaryWeaponShooting != null) && primaryWeaponShooting.IsShooting() == false && secondaryWeaponShooting.IsShooting() == false)
             RotationUpdate(movement);
     }
 }

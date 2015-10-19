@@ -65,7 +65,7 @@ GameObject:
   - 33: {fileID: 3394740}
   - 23: {fileID: 2392646}
   - 65: {fileID: 6515696}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,12 +81,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 486358}
   - 108: {fileID: 10820484}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &182994
 GameObject:
@@ -442,7 +442,7 @@ Light:
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
-    m_Resolution: -1
+    m_Resolution: 0
     m_Strength: 1
     m_Bias: .0500000007
     m_NormalBias: .400000006
@@ -453,7 +453,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_BounceIntensity: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

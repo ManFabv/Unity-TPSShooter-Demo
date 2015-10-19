@@ -49,10 +49,10 @@ public class CameraSmoothFollow : MonoBehaviour {
 		float currentHeight = transform.position.y;
 
 		//interpolamos el angulo para acercarnos al angulo deseado
-		currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+		currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.fixedDeltaTime);
 
         //interpolamos la altura para acercarnos a la altura deseada
-        currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+        currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.fixedDeltaTime);
 
         ////interpolamos la posicion a la posicion deseada (teniedo en cuenta el offset)
         transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref velocity, followTranslationDamp);
