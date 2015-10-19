@@ -8,8 +8,6 @@ public class MusicManager : Singleton<MusicManager>
     [SerializeField]
     private AudioMixerSnapshot vol_high; //volumen maximo
     [SerializeField]
-    private AudioMixerSnapshot vol_distortion; //con efectos de distorsion para representar que revento una granada
-    [SerializeField]
     private AudioMixer audioMixer;
 
     [SerializeField]
@@ -39,7 +37,7 @@ public class MusicManager : Singleton<MusicManager>
 	{
         //cargo los snapshots, diciendo con el segundo parametro, el peso de cada snapshot (vemos que como segundo parametro tenemos 1,0, esto
         //quiere decir que el snapshot actual esta completamente hacia el snapshot de volumen bajo y nada del snapshot de volumen alto)
-		audioMixer.TransitionToSnapshots (new AudioMixerSnapshot[] {vol_low, vol_high, vol_distortion }, new float[]{1, 0, 0}, float.Epsilon);
+		audioMixer.TransitionToSnapshots (new AudioMixerSnapshot[] {vol_low, vol_high}, new float[]{1, 0}, float.Epsilon);
 
         //llamo con un retraso para comenzar el fade in
 		Invoke ("InitFadeIn", float.Epsilon*2.0f);
@@ -50,16 +48,4 @@ public class MusicManager : Singleton<MusicManager>
         //inicio la transicion del audio, hacia el snapshot con volumen alto y le paso el tiempo de fade
 		vol_high.TransitionTo (timeForFade);
 	}
-
-    public void InitDistortion(float timeToInit)
-    {
-        //inicio una transicion casi inmediata al snapshot que implementa el distortion
-        vol_distortion.TransitionTo(timeToInit);
-    }
-
-    public void EndDistortion(float timeToEnd)
-    {
-        //hago una transicion suave al snapshot normal
-        vol_high.TransitionTo(timeToEnd);
-    }
 }
