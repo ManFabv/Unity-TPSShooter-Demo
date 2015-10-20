@@ -37,6 +37,9 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
 
     private float timeEffectsDuration; //el tiempo que demora en mostrar los efectos del disparo
 
+    //el tiempo que pasara despues de disparar para que el control de la rotacion pase al script player movement
+    private float timeForStopUpdatingRotation;
+
     void Start()
     {
         //obtengo el layer shootable
@@ -48,10 +51,16 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
 
-        timeEffectsDuration = timeBetweenBullets* effectsDisplayTime;
+        timeEffectsDuration = timeBetweenBullets * effectsDisplayTime;
 
         //busco una referencia al script que controla el movimiento del jugador
         playerMovement = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.PLAYER).GetComponent<PlayerMovement>();
+
+        timer = timeBetweenBullets; //asigno el tiempo maximo para poder comenzar a disparar
+
+        isShooting = false; //digo que por defecto no dispara
+
+        timeForStopUpdatingRotation = timeEffectsDuration*10; //calculo el tiempo para dejar de disparar como 10 veces el tiempo para terminar de disparar
     }
 
     void Update()
@@ -63,7 +72,7 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
         if (aimMovement != Vector3.zero)
         {
             isShooting = true; //digo que esta disparando
-
+            
             //si el tiempo que paso es mayor que el tiempo entre disparos, entonces vuelvo a disparar
             //y si ademas el timescale no es cero (no esta en pausa)
             if (timer >= timeBetweenBullets && Time.timeScale != 0)
@@ -71,12 +80,14 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
         }
 
         else //si no esta disparando, digo que ya no dispara
-            isShooting = false;
-
-        //si paso el tiempo del disparo, desactivo los efectos del disparo
-        if (timer >= timeEffectsDuration)
         {
-            DisableEffects();
+            //si paso el tiempo del disparo y esta disparando, desactivo los efectos del disparo y digo que ya no esta disparando
+            if (timer >= timeForStopUpdatingRotation && isShooting == true)
+            {
+                DisableEffects();
+                isShooting = false;
+                timer = timeEffectsDuration; //hago que el tiempo sea el tiempo mayor de disparo
+            }
         }
 
         //si esta disparando, actualizo la rotacion
@@ -89,8 +100,11 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
             timer += Time.fixedDeltaTime;
         }
 
-        else //si no esta disparando
-            timer = timeEffectsDuration; //pongo el timer al valor maximo de tiempo para desactivar los disparos
+        //si paso el tiempo del disparo, desactivo los efectos del disparo
+        if (timer >= timeEffectsDuration)
+        {
+            DisableEffects();
+        }
     }
 
     public bool IsShooting()

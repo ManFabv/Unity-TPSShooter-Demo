@@ -58,17 +58,13 @@ public class PlayerMovement : MonoBehaviour
             Move();
         }
 
-        //realizo la rotacion, de haber alguna
+        //actualizo la rotacion
         Rotate();
     }
 
     private void Move()
     {
-        //si no hay movimiento, salgo del metodo
-        if (moveDirection == Vector3.zero)
-            return;
-        
-        //muevo al cuerpo rigido en la direccion especificada
+        //muevo al cuerpo rigido en la direccion especificada en moveDirection
         playerRigidBody.MovePosition(Vector3.Lerp(playerRigidBody.position, playerRigidBody.position + moveDirection, Time.fixedDeltaTime * translationSpeed));
     }
 
@@ -78,19 +74,19 @@ public class PlayerMovement : MonoBehaviour
         if (rotationDirection == Vector3.zero)
             return;
         
-        //roto al cuerpo rigido en la direccion especificada
+        //roto al cuerpo rigido en la direccion especificada en rotationDirection
         playerRigidBody.MoveRotation(Quaternion.RotateTowards(playerRigidBody.rotation, Quaternion.LookRotation(rotationDirection), Time.fixedDeltaTime * rotationSpeed));
     }
 
     public void RotationUpdate(Vector3 externalRotation)
     {
-        //guardo la rotacion
+        //guardo la rotacion para aplicarla en el fixed update
         rotationDirection = externalRotation;
     }
 
     public void MovementUpdate(Vector3 externalMovement)
     {
-        //guardo el movimiento
+        //guardo el movimiento para aplicarlo en el fixed update
         moveDirection = externalMovement;
     }
 }
