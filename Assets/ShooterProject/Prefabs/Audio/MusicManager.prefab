@@ -114,7 +114,7 @@ MonoBehaviour:
   vol_low: {fileID: 24504170, guid: 0069760745f214c8392c28704b07118b, type: 2}
   vol_high: {fileID: 24500003, guid: 0069760745f214c8392c28704b07118b, type: 2}
   audioMixer: {fileID: 24100000, guid: 0069760745f214c8392c28704b07118b, type: 2}
-  timeForFade: 1.5
+  timeForFade: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -8,8 +8,7 @@ public class GrenadeShot : MonoBehaviour {
     protected AudioSource gunAudioDisparo;
     protected Light gunLightDisparo;
 
-    [SerializeField]
-    private LayerMask layerExplosion;
+    private int layerExplosion;
 
     [SerializeField]
     protected float timeUntilExplosion = 2.5f;
@@ -24,6 +23,9 @@ public class GrenadeShot : MonoBehaviour {
 
     void Start()
     {
+        //obtengo el layer enemy
+        layerExplosion = LayerMask.GetMask("Shootable");
+
         //obtengo los scripts necesarios para representar el disparo
         gunParticlesDisparo = this.GetComponent<ParticleSystem>();
         gunAudioDisparo = this.GetComponent<AudioSource>();

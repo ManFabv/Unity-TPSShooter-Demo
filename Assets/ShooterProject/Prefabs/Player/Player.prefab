@@ -898,9 +898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdef78a39e779574b8d24d3eb030ac4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerExplosion:
-    serializedVersion: 2
-    m_Bits: 4096
   timeUntilExplosion: 4
   explosionRadius: 8
   explosionForce: 700
@@ -919,9 +916,6 @@ MonoBehaviour:
   damagePerShot: 20
   timeBetweenBullets: .150000006
   range: 100
-  shootableMask:
-    serializedVersion: 2
-    m_Bits: 4096
 --- !u!114 &11484332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -947,7 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   translationSpeed: 4
-  rotationSpeed: 15
+  rotationSpeed: 600
 --- !u!120 &12085300
 LineRenderer:
   m_ObjectHideFlags: 1

@@ -21,8 +21,7 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
     protected RaycastHit shootHit;
 
     //mascara en la cual revisare por colisiones en el raycast
-    [SerializeField]
-    protected LayerMask shootableMask;
+    protected int shootableMask;
     
     //recursos que usare para realizar el disparo (como las particulas, el audio, etc)
     protected ParticleSystem gunParticles;
@@ -36,34 +35,34 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
 
     protected Vector3 aimMovement; //vector con el que armare la direccion en la que estoy disparando
 
+    private float timeEffectsDuration; //el tiempo que demora en mostrar los efectos del disparo
+
     void Start()
     {
+        //obtengo el layer shootable
+        shootableMask = LayerMask.GetMask("Shootable");
+
         //obtengo los scripts necesarios para representar el disparo
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
 
+        timeEffectsDuration = timeBetweenBullets* effectsDisplayTime;
+
         //busco una referencia al script que controla el movimiento del jugador
         playerMovement = ManagerReferencias.Instance.ObtenerReferencia(NombresReferencias.NOMBRES_REFERENCIAS.PLAYER).GetComponent<PlayerMovement>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        //si esta disparando, voy incrementando el tiempo
-        if(isShooting)
-            timer += Time.fixedDeltaTime;
-
         //tomo la direccion en la que esta apuntando el jugador con el stick derecho
         aimMovement = new Vector3(CnInputManager.GetAxis("HorizontalAim"), 0.0f, CnInputManager.GetAxis("VerticalAim"));
 
         //si hay movimiento en cualquier direccion
-        if (aimMovement.x != 0 || aimMovement.z != 0)
+        if (aimMovement != Vector3.zero)
         {
             isShooting = true; //digo que esta disparando
-
-            //actualizo la direccion de rotacion para moverme en la direccion en la que dispara
-            playerMovement.RotationUpdate(aimMovement);
 
             //si el tiempo que paso es mayor que el tiempo entre disparos, entonces vuelvo a disparar
             //y si ademas el timescale no es cero (no esta en pausa)
@@ -75,10 +74,23 @@ public abstract class BasicPrimaryWeapon : MonoBehaviour {
             isShooting = false;
 
         //si paso el tiempo del disparo, desactivo los efectos del disparo
-        if (timer >= timeBetweenBullets * effectsDisplayTime)
+        if (timer >= timeEffectsDuration)
         {
             DisableEffects();
         }
+
+        //si esta disparando, actualizo la rotacion
+        if (isShooting)
+        {
+            //actualizo la direccion de rotacion para moverme en la direccion en la que dispara
+            playerMovement.RotationUpdate(aimMovement);
+
+            //voy incrementando el tiempo
+            timer += Time.fixedDeltaTime;
+        }
+
+        else //si no esta disparando
+            timer = timeEffectsDuration; //pongo el timer al valor maximo de tiempo para desactivar los disparos
     }
 
     public bool IsShooting()
