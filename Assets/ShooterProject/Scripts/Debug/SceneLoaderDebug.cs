@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneLoaderDebug : MonoBehaviour {
 
@@ -14,7 +15,7 @@ public class SceneLoaderDebug : MonoBehaviour {
         if (loadingLevel == false)
         {
             loadingLevel = true;
-            Application.LoadLevel(nombreEscenaSilvio);
+            SceneManager.LoadScene(nombreEscenaSilvio);
         }
     }
 
@@ -23,7 +24,7 @@ public class SceneLoaderDebug : MonoBehaviour {
         if (loadingLevel == false)
         {
             loadingLevel = true;
-            Application.LoadLevel(nombreEscenaFabricio);
+            SceneManager.LoadScene(nombreEscenaFabricio);
         }
     }
 }
