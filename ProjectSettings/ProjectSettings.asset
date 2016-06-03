@@ -163,7 +163,7 @@ PlayerSettings:
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
   AndroidTVCompatibility: 0
-  AndroidIsGame: 0
+  AndroidIsGame: 1
   androidEnableBanner: 0
   m_AndroidBanners:
   - width: 320
