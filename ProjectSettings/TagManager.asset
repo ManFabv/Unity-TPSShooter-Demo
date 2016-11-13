@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - WeaponSlot
   - Fire
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Player
   - WeaponSlot
   - Shootable
-  - 
+  - CarriedWeapon
   - 
   - 
   - 
