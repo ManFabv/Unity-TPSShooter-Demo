@@ -71,7 +71,7 @@ public class GrenadeShot : MonoBehaviour {
         AfectarObjetosEnRadio(); //hago que la explosion afecte a los objetos en el radio
 
         //tomo el maximo valor entre la duracion del sistema de particulas y el clip de audio del disparo
-        float timeToClean = Mathf.Max(gunParticlesDisparo.duration * 1.2f, gunAudioDisparo.clip.length + 0.1f);
+        float timeToClean = Mathf.Max(gunParticlesDisparo.main.duration * 1.2f, gunAudioDisparo.clip.length + 0.1f);
 
         //invoco al metodo clean para que se ejecute en un cierto tiempo. El tiempo lo tomo como el maximo
         //valor entre la duracion del sistema de particulas mas un 20%, o la duracion del clip de audio mas un 10%
