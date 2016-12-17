@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ManagerNotificaciones : Singleton<ManagerNotificaciones> {
 
-	//aqui guardare todos los listeners
-	private Dictionary<string, List<Component>> Listeners = new Dictionary<string, List<Component>>();
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += NivelCargado; //es el equivalente a OnLevelWasLoaded();
+    }
+
+    //aqui guardare todos los listeners
+    private Dictionary<string, List<Component>> Listeners = new Dictionary<string, List<Component>>();
 	
 	public void AddListener(Component Sender, string NotificationName)
 	{
@@ -76,8 +82,14 @@ public class ManagerNotificaciones : Singleton<ManagerNotificaciones> {
 	}
 	
 	//remuevo los listeners redundantes al cargar el nivel
-	void OnLevelWasLoaded()
-	{
+	void NivelCargado(Scene escena, LoadSceneMode mode)
+    {
 		RemoveRedundancies();
 	}
+
+    private void OnDisable()
+    {
+        //QUITO EL DELEGADO de la ESCENA
+        SceneManager.sceneLoaded -= NivelCargado;
+    }
 }

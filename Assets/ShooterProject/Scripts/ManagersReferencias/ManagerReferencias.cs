@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ManagerReferencias : Singleton<ManagerReferencias> {
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += NivelCargado; //es el equivalente a OnLevelWasLoaded();
+    }
 
 	private Dictionary<NombresReferencias.NOMBRES_REFERENCIAS, List<GameObject>> listadoReferencias = new Dictionary<NombresReferencias.NOMBRES_REFERENCIAS, List<GameObject>>();
 	
@@ -83,8 +89,14 @@ public class ManagerReferencias : Singleton<ManagerReferencias> {
 	}
 	
 	//remuevo las referencias redundantes al cargar el nivel
-	void OnLevelWasLoaded()
+	void NivelCargado(Scene escena, LoadSceneMode mode)
 	{
 		LimpiarListadoDeInnecesarios();
 	}
+
+    private void OnDisable()
+    {
+        //QUITO EL DELEGADO de la ESCENA
+        SceneManager.sceneLoaded -= NivelCargado;
+    }
 }

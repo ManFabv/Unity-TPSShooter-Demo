@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : Singleton<MusicManager> 
 {
@@ -15,15 +16,22 @@ public class MusicManager : Singleton<MusicManager>
 
 	private static MusicManager instanceRef = null; //para evitar objetos duplicados voy a usar esta variable como control
 
-	void Awake()
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += NivelCargado; //es el equivalente a OnLevelWasLoaded();
+    }
+
+
+    void Awake()
 	{
-		if(instanceRef == null) //si no hay instancia referenciada
+        if (instanceRef == null) //si no hay instancia referenciada
 		{
 			//agrego la instancia y digo que no se destruya
 			instanceRef = this;
 			DontDestroyOnLoad(gameObject);
 
-            OnLevelWasLoaded(); //inicializo el audio
+            //los parametros son irrelevantes ya que no los uso en el metodo NivelCargado
+            NivelCargado(SceneManager.GetActiveScene(), LoadSceneMode.Single); //inicializo el audio
         }
 		
 		else //si ya hay una instancia, entonces puedo destruir esta instancia
@@ -33,8 +41,8 @@ public class MusicManager : Singleton<MusicManager>
 	}
 	
 	//cuando un nivel es cargado, se ejecuta este metodo callback
-	void OnLevelWasLoaded () 
-	{
+	void NivelCargado(Scene escena, LoadSceneMode mode)
+    {
         //cargo los snapshots, diciendo con el segundo parametro, el peso de cada snapshot (vemos que como segundo parametro tenemos 1,0, esto
         //quiere decir que el snapshot actual esta completamente hacia el snapshot de volumen bajo y nada del snapshot de volumen alto)
 		audioMixer.TransitionToSnapshots (new AudioMixerSnapshot[] {vol_low, vol_high}, new float[]{1, 0}, float.Epsilon);
@@ -48,4 +56,10 @@ public class MusicManager : Singleton<MusicManager>
         //inicio la transicion del audio, hacia el snapshot con volumen alto y le paso el tiempo de fade
 		vol_high.TransitionTo (timeForFade);
 	}
+
+    private void OnDisable()
+    {
+        //QUITO EL DELEGADO de la ESCENA
+        SceneManager.sceneLoaded -= NivelCargado;
+    }
 }
