@@ -14,3 +14,7 @@ Temp/*
 /Thumbs.db
 /*.pdb
 
+obj
+Logs
+.vs
+.idea
